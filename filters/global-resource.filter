@@ -1,6 +1,20 @@
 public_host=localhost
 test.url=
 
+defaultTarget.port=8090
+private.ssl=9443
+public.ssl=10443
+
+# General log settings
+camptocamp.security.loglevel=ALL
+jasig.loglevel=ALL
+springframework.loglevel=ALL
+logdir=logs
+
+# options are StandardOut, FileAppender or HTMLAppender (zero or more and comma separated) 
+log.appender=StandardOut
+
+
 #LDAP config
 ldapUrl=ldaps://drebretagne-geobretagne.int.lsn.camptocamp.com:10636/
 userSearchBaseDN=ou=users,dc=geobretagne,dc=fr
@@ -8,13 +22,13 @@ authoritiesBaseDN=ou=groups,dc=geobretagne,dc=fr
 ldapAdminDn=cn=admin,dc=geobretagne,dc=fr
 ldap.admin.password=gerlsSnFd6SmM
 
-defaultTarget.port=8090
-private.ssl=9443
-public.ssl=10443
+# extra LDAP for CAS
+userIdAtt=uid
+cas.userDn={bind_username_goes_here}
+cas.userPassword={bind_user_password_goes_here}
 
-camptocamp.security.loglevel=ALL
-jasig.loglevel=ALL
-springframework.loglevel=ALL
-logdir=logs
-# options are StandardOut, FileAppender or HTMLAppender (zero or more and comma separated) 
-log.appender=StandardOut
+# extra params for CAS
+casContext=cas
+cas.securityContext.serviceProperties.service=https://@public_host@:@private.ssl@/@casContext@/services/j_acegi_cas_security_check
+cas.securityContext.casProcessingFilterEntryPoint.loginUrl=https://@public_host@:@private.ssl@/@casContext@/login
+cas.securityContext.ticketValidator.casServerUrlPrefix=https://@public_host@:@private.ssl@/@casContext@
